@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import logo from '../../public/images/camera.png'
 
 const Navbar = () => {
   const item = (
@@ -37,13 +38,16 @@ const Navbar = () => {
             {item}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <img src={logo} alt="" className="h-[40px] w-[60px]" />
+        <h1 className="font-bold text-slate-900 font-serif">Candy<span className="text-red-600 font-bold font-sans">Snap</span> </h1>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{item}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        {
+          //comming soon
+        }
       </div>
     </div>
   );
