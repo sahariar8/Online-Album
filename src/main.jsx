@@ -8,6 +8,9 @@ import Error from './components/Error.jsx'
 import ContextProvider from './provider/ContextProvider.jsx'
 import Login from './pages/auth/Login.jsx'
 import Register from './pages/auth/Register.jsx'
+import AddImage from './pages/add-Image/AddImage.jsx'
+import AllImage from './pages/all-image/AllImage.jsx'
+import PrivateRoutes from './routes/privateRoute/PrivateRoutes.jsx'
 
 const router = createBrowserRouter([
   {
@@ -21,11 +24,11 @@ const router = createBrowserRouter([
       },
       {
         path:'add-image',
-        element:<Home></Home>
+        element:<PrivateRoutes><AddImage></AddImage></PrivateRoutes>
       },
       {
         path:'all-image',
-        element:<Home></Home>
+        element:<PrivateRoutes><AllImage></AllImage></PrivateRoutes>
       },
       {
         path:'/login',

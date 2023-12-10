@@ -26,8 +26,12 @@ const Navbar = () => {
   const item = (
     <div className="flex gap-5 font-bold">
       <li><NavLink to={'/'}>Home</NavLink></li>
-      <li><NavLink to={'/add-image'}>Add Image</NavLink></li>
-      <li><NavLink to={'/all-image'}>All Image</NavLink></li>
+     {
+       user && <>
+        <li><NavLink to={'/add-image'}>Add Image</NavLink></li>
+        <li><NavLink to={'/all-image'}>All Image</NavLink></li>
+       </>
+     }
     </div>
   );
 
