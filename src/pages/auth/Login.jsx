@@ -1,14 +1,38 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../social/SocialLogin";
+import useAuth from "../../hooks/useAuth";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import Swal from "sweetalert2";
 
 
 
 const Login = () => {
-    const { createUser,userProfileUpdate } = useAuth();
-        const { register,handleSubmit,formState: { errors } } = useForm();
+        const { userLogin } = useAuth();
+        const [error,setError] = useState();
+        const { register,handleSubmit} = useForm();
+        const location = useLocation();
+        console.log(location);
+        const from = location.state?.from?.pathname || "/";
+        const navigate = useNavigate();
 
         const onSubmit = (data)=>{
             console.log(data);
+            userLogin(data.email,data.password)
+            .then(result=>{
+                console.log(result.user);
+                Swal.fire({
+                    title: "Good job!",
+                    text: "SuccessFully Logged In!",
+                    icon: "success"
+                  });
+                  navigate(from,{replace:true})
+            })
+            .catch(error=>{
+                console.log(error.message);
+                setError(error.message);
+            })
+           
         }
     
 
@@ -32,7 +56,8 @@ const Login = () => {
                 <label className="label">
                   <span className="label-text">Password</span>
                 </label>
-                <input type="password" placeholder="password" className="input input-bordered" {...register('image')} required />
+                <input type="password" placeholder="password" className="input input-bordered" {...register('password')} required />
+                <h1 className="font-bold text-red-600">{error}</h1>
                 <label className="label">
                   <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                 </label>
