@@ -20,6 +20,14 @@ const router = createBrowserRouter([
         element:<Home></Home>
       },
       {
+        path:'add-image',
+        element:<Home></Home>
+      },
+      {
+        path:'all-image',
+        element:<Home></Home>
+      },
+      {
         path:'/login',
         element:<Login></Login>
       },
