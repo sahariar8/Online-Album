@@ -10,7 +10,7 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 
 const Register = () => {
         const { createUser,userProfileUpdate } = useAuth();
-        const { register,handleSubmit,reset } = useForm();
+        const { register,handleSubmit,formState: { errors } } = useForm();
         const axiosPublic  = useAxiosPublic();
         const navigate = useNavigate();
 
@@ -41,9 +41,14 @@ const Register = () => {
                     icon: "success"
                   });
                   navigate('/login');
+
                   userProfileUpdate(name,image)
-                  .then(result=>{
-                    console.log(result.user)
+                  .then(()=>{
+                    console.log('profile updated');
+                    axiosPublic.post('/users',user)
+                    .then(res=>{
+                        console.log(res.data)
+                    })
                   })
                   .catch(error=>{
                     console.log(error.message)
@@ -53,8 +58,6 @@ const Register = () => {
                 console.log(error.messag);
             })
            }
-
-
             
         }
 
@@ -71,22 +74,34 @@ const Register = () => {
             <label className="label">
               <span className="label-text">Name</span>
             </label>
-            <input type="text" placeholder="Name" className="input input-bordered" {...register('name', { required: true })} />
+            <input type="text" placeholder="Name" className="input input-bordered" {...register('name')} required />
+           
           </div>
           <div className="form-control">
             <label className="label">
               <span className="label-text">Email</span>
+             
             </label>
-            <input type="email" placeholder="email" className="input input-bordered" {...register('email', { required: true })}/>
+            <input type="email" placeholder="email" className="input input-bordered" {...register('email')} required/>
+            
           </div>
           <div className="form-control">
             <label className="label">
               <span className="label-text">Password</span>
             </label>
-            <input type="password" placeholder="password" className="input input-bordered"{...register('password', { required: true })} />
+            <input type="password" placeholder="password" className="input input-bordered"
+            {...register("password", {
+                minLength: 6,
+                pattern: /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{6,}$/}
+                )} required />
+               
+                {errors.password?.type === 'minLength' && <span className='text-red-600'>Password Must be six Charecter</span>}
+                {errors.password?.type === 'pattern' && <span className='text-red-600'>Password Must be One UpperCase,one numeric number and One Special Charecter</span>
+                }
           </div>
           <div className="form-control">
-          <input type="file" className="file-input file-input-bordered w-full max-w-xs" {...register('image', { required: true })} />
+          <input type="file" className="file-input file-input-bordered w-full max-w-xs" {...register('image')} required />
+         
           </div>
 
           <div className="form-control mt-6">

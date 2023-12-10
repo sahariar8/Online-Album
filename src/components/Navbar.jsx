@@ -1,16 +1,33 @@
-import { NavLink } from "react-router-dom";
-import logo from '../../public/images/camera.png'
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import logo from '/images/camera.png'
 import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
+
 
 const Navbar = () => {
-  const { user }  = useAuth();
-  console.log(user);
+  const { user,logOut }  = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogOut =()=>{
+    logOut()
+    .then(()=>{
+      console.log('logout');
+      Swal.fire({
+        title: "Good job!",
+        text: "Successfully Logged Out",
+        icon: "Success"
+      });
+      navigate('/login');
+    })
+    .catch(error=>{
+      console.log(error.message);
+    })
+  }
   const item = (
-    <div className="flex gap-5">
+    <div className="flex gap-5 font-bold">
       <li><NavLink to={'/'}>Home</NavLink></li>
       <li><NavLink to={'/about'}>About</NavLink></li>
       <li><NavLink to={'/contact'}>Contact</NavLink></li>
-      
     </div>
   );
 
@@ -48,9 +65,26 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{item}</ul>
       </div>
       <div className="navbar-end">
-        {
-          //comming soon
-        }
+      {
+        user ? 
+          <div className="flex items-center">
+           
+           <div className="avatar online">
+              <div className="w-8 md:w-12 rounded-full">
+                <Link to='/profile'><img src={user?.photoURL}/></Link>
+              </div>
+            </div>
+          
+            
+            <h1 className="btn btn-sm normal-case btn-neutral ml-2 mr-5 text-base font-semibold" onClick={handleLogOut}>LogOut</h1>
+            
+          </div>
+         : 
+          <>
+          <Link to="/login">LogIn</Link>
+          </>
+        
+    }
       </div>
     </div>
   );

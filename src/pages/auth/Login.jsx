@@ -4,6 +4,12 @@ import SocialLogin from "../social/SocialLogin";
 
 
 const Login = () => {
+    const { createUser,userProfileUpdate } = useAuth();
+        const { register,handleSubmit,formState: { errors } } = useForm();
+
+        const onSubmit = (data)=>{
+            console.log(data);
+        }
     
 
 
@@ -14,19 +20,19 @@ const Login = () => {
           <img src={'/public/images/authentication.gif'} alt="" />
         </div>
           <div className="card w-full md:w-1/2 shadow-2xl bg-base-100">
-            <form className="card-body">
+            <form className="card-body" onSubmit={handleSubmit(onSubmit)}>
                 <h1 className="font-bold text-3xl md:text-5xl text-blue-600 text-center">Login Now</h1>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
                 </label>
-                <input type="email" placeholder="email" className="input input-bordered" required />
+                <input type="email" placeholder="email" className="input input-bordered" {...register('email')} required />
               </div>
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Password</span>
                 </label>
-                <input type="password" placeholder="password" className="input input-bordered" required />
+                <input type="password" placeholder="password" className="input input-bordered" {...register('image')} required />
                 <label className="label">
                   <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                 </label>

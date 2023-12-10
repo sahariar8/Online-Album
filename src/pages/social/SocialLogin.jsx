@@ -1,11 +1,42 @@
 import useAuth from "../../hooks/useAuth";
 import { FcGoogle } from "react-icons/fc";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import { useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 
 const SocialLogin = () => {
-    const auth  = useAuth();
-    console.log(auth);
+    const {googleLogin} = useAuth();
+    const axiosPublic = useAxiosPublic();
+    const navigate  = useNavigate();
+    const location = useLocation();
+    
     const handleGoogle = ()=>{
+        googleLogin()
+        .then(result=>{
+            console.log(result.user);
+            Swal.fire({
+                title: "Good job!",
+                text: "Registration Successfully Done",
+                icon: "success"
+              });
+            navigate('/')
+
+            const name = result.user.displayName;
+            const email = result.user.email;
+            const image = result.user.photoURL;
+
+            const user = { name,email,image };
+            axiosPublic.post('/users',user)
+            .then(res=>{
+                console.log(res.data);
+            })
+
+           
+        })
+        .catch(error=>{
+            console.log(error.message);
+        })
 
     }
     return (
