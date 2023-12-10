@@ -2,12 +2,12 @@
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCSS6YLgIEmPNWoH9cnfqTe5iAZuvMY40c",
-  authDomain: "online-album-7ea6b.firebaseapp.com",
-  projectId: "online-album-7ea6b",
-  storageBucket: "online-album-7ea6b.appspot.com",
-  messagingSenderId: "612620049987",
-  appId: "1:612620049987:web:715ed17662a18c0e783ef6"
+  apiKey:import.meta.env.VITE_APIKEY,
+  authDomain:import.meta.env.VITE_AUTHDOMAIN,
+  projectId:import.meta.env.VITE_PROJECTID,
+  storageBucket:import.meta.env.VITE_STORAGEBUCKET,
+  messagingSenderId:import.meta.env.VITE_MESSAGINGSENDERID,
+  appId:import.meta.env.VITE_APPID,
 };
 
 

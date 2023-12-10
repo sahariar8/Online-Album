@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
 import logo from '../../public/images/camera.png'
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
+  const { user }  = useAuth();
+  console.log(user);
   const item = (
     <div className="flex gap-5">
       <li><NavLink to={'/'}>Home</NavLink></li>
